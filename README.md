@@ -84,8 +84,11 @@ kubectl apply -f .
 ![image](pics/cluster/cluster.png)
 ![image](pics/cluster/cluster-1.png)
 ### instances
+1. instances list
 ![image](pics/instances/instances.png)
+2. bastion info
 ![image](pics/instances/bastion-host-instnace.png)
+3. gke node info 
 ![image](pics/instances/gke-node-sample.png)
 ### load balancers
 
@@ -95,7 +98,7 @@ kubectl apply -f .
 2- frontend info
 ![image](pics/loadbalancers/frontend.png)
 3- backend info 
-![image](pics/loadbalancers/frontend.png)
+![image](pics/loadbalancers/backend.png)
 
 ### gcr 
 1. images
