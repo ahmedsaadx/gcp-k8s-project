@@ -2,18 +2,18 @@ version: '3'
 networks:
   app-network:
     driver: bridge
-
-
 services:
   redis:
-    image: redis:alpine
+    image: gcr.io/saad-375811/redis 
     networks:
       - app-network
+    ports:
+      - 6379:6379    
   tornado:
     build: 
       context: .
       dockerfile: Dockerfile
-    image: tornade-app
+    image: gcr.io/saad-375811/app
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -26,4 +26,5 @@ services:
     depends_on:
       - redis
     networks:
-      - app-network  
+      - app-network 
+    

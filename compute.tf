@@ -21,14 +21,10 @@ resource "google_compute_instance" "bastion_host" {
     email  = google_service_account.service_account.email
     scopes = ["cloud-platform"]
   }
+  depends_on = [
+    google_container_cluster.private
+  ]
 }
-
-resource "null_resource" "file_transfer" {
-  provisioner "local-exec" {
-    command = "gcloud scp -i ./app  bastion_host:/home/mrkernel/"
-  }
-}
-
 
 
 
@@ -64,20 +60,10 @@ resource "google_container_cluster" "private" {
   release_channel {
     channel = "REGULAR"
   }
-  initial_node_count = 1
-}
-
-
-
-
-
-resource "google_container_node_pool" "private_node_pool" {
-  name               = "private-node-pool"
-  location           = google_container_cluster.private.location
-  cluster            = google_container_cluster.private.name
+  initial_node_count = 3
   node_config {
     machine_type = "n1-standard-1"
-      service_account = google_service_account.service_account.email
+    service_account = google_service_account.service_account1.email
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
@@ -85,9 +71,12 @@ resource "google_container_node_pool" "private_node_pool" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
     ]
+    
   }
-  initial_node_count = 3
-  
-  
-
 }
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tornado
+  name: tornado
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: tornado
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/app-app-network: "true"
+        io.kompose.service: tornado
+    spec:
+      containers:
+        - env:
+            - name: ENVIRONMENT
+              value: DEV
+            - name: HOST
+              value: '''0.0.0.0'''
+            - name: PORT
+              value: "8000"
+            - name: REDIS_DB
+              value: "0"
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+          image: gcr.io/saad-375811/app
+          name: tornado
+          ports:
+            - containerPort: 8000
+          resources: {}
+      restartPolicy: Always
+status: {}
